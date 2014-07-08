@@ -22,14 +22,14 @@ Also, check out the **[FAQ](https://github.com/ether/etherpad-lite/wiki/FAQ)**, 
 
 # Installation
 
-Etherpad works with node v0.8 and v0.10, only. (We don't support v0.6)
+Etherpad works with node v0.8, v0.10 and v0.11, only. (We don't support v0.6)
 
 ## Windows
 
 ### Prebuilt windows package
 This package works out of the box on any windows machine, but it's not very useful for developing purposes...
 
-1. [Download the latest windows package](http://etherpad.org/downloads/etherpad-lite-win-1.2.91-7492fb18a4.zip)
+1. [Download the latest windows package](http://etherpad.org/#download)
 2. Extract the folder
 
 Now, run `start.bat` and open <http://localhost:9001> in your browser. You like it? [Next steps](#next-steps).

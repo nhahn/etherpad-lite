@@ -24,9 +24,9 @@ var os = require("os");
 var path = require('path');
 var argv = require('./Cli').argv;
 var npm = require("npm/lib/npm.js");
-var vm = require('vm');
+var jsonminify = require("jsonminify");
 var log4js = require("log4js");
-var randomString = require('ep_etherpad-lite/static/js/pad_utils').randomString;
+var randomString = require("./randomstring");
 
 
 /* Root path of the installation */
@@ -93,6 +93,9 @@ exports.toolbar = {
     ["importexport", "timeslider", "savedrevision"],
     ["settings", "embed"],
     ["showusers"]
+  ],
+  timeslider: [
+    ["timeslider_export", "timeslider_returnToPad"]
   ]
 }
 
@@ -183,8 +186,8 @@ exports.reloadSettings = function reloadSettings() {
   var settings;
   try {
     if(settingsStr) {
-      settings = vm.runInContext('exports = '+settingsStr, vm.createContext(), "settings.json");
-      settings = JSON.parse(JSON.stringify(settings)); // fix objects having constructors of other vm.context
+      settingsStr = jsonminify(settingsStr).replace(",]","]").replace(",}","}");
+      settings = JSON.parse(settingsStr);
     }
   }catch(e){
     console.error('There was an error processing your settings.json file: '+e.message);

@@ -61,7 +61,7 @@ Portal submits content into new blog post
 ## Usage
 
 ### API version
-The latest version is `1.2.8`
+The latest version is `1.2.9`
 
 The current version can be queried via /api.
 
@@ -294,15 +294,14 @@ returns the text of a pad formatted as HTML
   * `{code: 0, message:"ok", data: {html:"Welcome Text<br>More Text"}}`
   * `{code: 1, message:"padID does not exist", data: null}`
 
-#### setHTML(padID, text)
+#### setHTML(padID, html)
  * API >= 1
 
-sets the html of a pad
+sets the text of a pad based on HTML, HTML must be well formed. Malformed HTML will send a warning to the API log.
 
 *Example returns:*
   * `{code: 0, message:"ok", data: null}`
   * `{code: 1, message:"padID does not exist", data: null}`
-  * `{code: 1, message:"text too long", data: null}`
 
 #### getAttributePool(padID)
  * API >= 1.2.8
@@ -424,6 +423,24 @@ returns the list of users that are currently editing this pad
  * API >= 1
 
 deletes a pad
+
+*Example returns:*
+  * `{code: 0, message:"ok", data: null}`
+  * `{code: 1, message:"padID does not exist", data: null}`
+
+#### copyPad(sourceID, destinationID[, force=false])
+ * API >= 1.2.8
+
+copies a pad with full history and chat. If force is true and the destination pad exists, it will be overwritten.
+
+*Example returns:*
+  * `{code: 0, message:"ok", data: null}`
+  * `{code: 1, message:"padID does not exist", data: null}`
+
+#### movePad(sourceID, destinationID[, force=false])
+ * API >= 1.2.8
+
+moves a pad. If force is true and the destination pad exists, it will be overwritten.
 
 *Example returns:*
   * `{code: 0, message:"ok", data: null}`

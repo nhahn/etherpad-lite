@@ -46,7 +46,14 @@ exports.expressCreateServer = function (hook_name, args, cb) {
   //serve timeslider.html under /p/$padname/timeslider
   args.app.get('/p/:pad/timeslider', function(req, res, next)
   {
-    res.send(eejs.require("ep_etherpad-lite/templates/timeslider.html", {req: req}));
+    hooks.callAll("padInitToolbar", {
+      toolbar: toolbar
+    });
+    
+    res.send(eejs.require("ep_etherpad-lite/templates/timeslider.html", {
+      req: req,
+      toolbar: toolbar
+    }));
   });
 
   //serve favicon.ico from all path levels except as a pad name
@@ -58,8 +65,8 @@ exports.expressCreateServer = function (hook_name, args, cb) {
       //there is no custom favicon, send the default favicon
       if(err)
       {
-	filePath = path.normalize(__dirname + "/../../../static/favicon.ico");
-	res.sendfile(filePath);
+        filePath = path.normalize(__dirname + "/../../../static/favicon.ico");
+        res.sendfile(filePath);
       }
     });
   });

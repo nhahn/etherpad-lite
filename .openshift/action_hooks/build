@@ -3,3 +3,60 @@
 # available.  Otherwise it will execute while your application is stopped
 # before the deploy step.  This script gets executed directly, so it
 # could be python, php, ruby, etc.
+
+
+#  Source utility functions.
+source "$OPENSHIFT_REPO_DIR/.openshift/lib/utils"
+
+#  Setup path to include the custom Node[.js] version.
+_SHOW_SETUP_PATH_MESSAGES="true" setup_path_for_custom_node_version
+
+# This deploy hook gets executed after dependencies are resolved and the
+# build hook has been run but before the application has been started back
+# up again.  This script gets executed directly, so it could be python, php,
+# ruby, etc.
+
+settingsfile=$OPENSHIFT_REPO_DIR/settings.json
+
+if [[-f $settingsfile]]
+then
+  rm $settingsfile
+fi
+cp $OPENSHIFT_REPO_DIR/settings.json.template $OPENSHIFT_REPO_DIR/settings.json
+
+sed -i 's/OPENSHIFT_NODEJS_IP/'$OPENSHIFT_NODEJS_IP'/' $settingsfile
+sed -i 's/OPENSHIFT_NODEJS_PORT/'$OPENSHIFT_NODEJS_PORT'/' $settingsfile
+sed -i 's/OPENSHIFT_MYSQL_DB_USERNAME/'$OPENSHIFT_MYSQL_DB_USERNAME'/' $settingsfile
+sed -i 's/OPENSHIFT_MYSQL_DB_HOST/'$OPENSHIFT_MYSQL_DB_HOST'/' $settingsfile
+sed -i 's/OPENSHIFT_MYSQL_DB_PORT/'$OPENSHIFT_MYSQL_DB_PORT'/' $settingsfile
+sed -i 's/OPENSHIFT_MYSQL_DB_PASSWORD/'$OPENSHIFT_MYSQL_DB_PASSWORD'/' $settingsfile
+sed -i 's/OPENSHIFT_APP_NAME/'$OPENSHIFT_APP_NAME'/' $settingsfile
+
+# Set up the symbolic links needed for etherpad to work
+pushd $OPENSHIFT_REPO_DIR
+if [[ -f ./server.js ]]
+then
+  rm server.js
+fi
+if [[ -f ./package.json ]]
+then
+  rm package.json
+fi
+ln -s node_modules/ep_etherpad-lite/node/server.js .
+ln -s node_modules/ep_etherpad-lite/package.json .
+popd
+pushd $OPENSHIFT_REPO_DIR/node_modules
+if [[ -f ./ep_etherpad-lite ]]
+then
+  rm ep_etherpad-lite
+fi
+ln -s ../src/ ep_etherpad-lite
+popd
+
+#  Do npm install with the new npm binary.
+if [ -f "${OPENSHIFT_REPO_DIR}"/package.json ]; then
+   echo "  - Installing dependencies w/ new version of npm ... "
+   echo
+   (cd "${OPENSHIFT_REPO_DIR}"; export TMPDIR="/tmp"; npm install -d)
+fi
+

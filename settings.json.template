@@ -37,7 +37,7 @@
    "dbSettings" : {
                     "user"    : "OPENSHIFT_MYSQL_DB_USERNAME", 
                     "password": "OPENSHIFT_MYSQL_DB_PASSWORD", 
-                    "database": "OPENSHIFT_MYSQL_DB_DATABASE",
+                    "database": "OPENSHIFT_APP_NAME",
                     "host": "OPENSHIFT_MYSQL_DB_HOST",
                     "port": "OPENSHIFT_MYSQL_DB_PORT"
                   },

@@ -12,8 +12,8 @@
   "favicon": "favicon.ico",
   
   //IP and port which etherpad should bind at
-  "ip": "0.0.0.0",
-  "port" : 9001,
+  "ip": "OPENSHIFT_NODEJS_IP",
+  "port" : OPENSHIFT_NODEJS_PORT,
 
   // Session Key, used for reconnecting user sessions
   // Set this to a secure string at least 10 characters long.  Do not share this value.
@@ -35,10 +35,11 @@
    
    "dbType" : "mysql",
    "dbSettings" : {
-                    "user"    : "root", 
-                    "password": "root", 
-                    "database": "etherpad",
-                    "port": "/Applications/MAMP/tmp/mysql/mysql.sock"
+                    "user"    : "OPENSHIFT_MYSQL_DB_USERNAME", 
+                    "password": "OPENSHIFT_MYSQL_DB_PASSWORD", 
+                    "database": "OPENSHIFT_MYSQL_DB_DATABASE",
+                    "host": "OPENSHIFT_MYSQL_DB_HOST",
+                    "port": "OPENSHIFT_MYSQL_DB_PORT"
                   },
   
   

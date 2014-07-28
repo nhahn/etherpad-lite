@@ -15,4 +15,5 @@ npm-debug.log
 .ep_initialized
 *.crt
 *.key
+src/node_modules/*
 bin/etherpad-1.deb

@@ -21,28 +21,3 @@ sed -i 's/OPENSHIFT_MYSQL_DB_PORT/'$OPENSHIFT_MYSQL_DB_PORT'/' $settingsfile
 sed -i 's/OPENSHIFT_MYSQL_DB_PASSWORD/'$OPENSHIFT_MYSQL_DB_PASSWORD'/' $settingsfile
 sed -i 's/OPENSHIFT_APP_NAME/'$OPENSHIFT_APP_NAME'/' $settingsfile
 
-# Set up the symbolic links needed for etherpad to work
-pushd $OPENSHIFT_REPO_DIR
-if [[ -f ./server.js ]]
-then
-  rm server.js
-fi
-if [[ -f ./package.json ]]
-then
-  rm package.json
-fi
-if [[ -d src/node_modules ]]
-then
-  rm -r src/node_modules 
-fi
-ln -s node_modules/ep_etherpad-lite/node/server.js .
-ln -s node_modules/ep_etherpad-lite/package.json .
-ln -s ../node_modules/ src/node_modules
-popd
-pushd $OPENSHIFT_REPO_DIR/node_modules
-if [[ -f ./ep_etherpad-lite ]]
-then
-  rm ep_etherpad-lite
-fi
-ln -s ../src/ ep_etherpad-lite
-popd

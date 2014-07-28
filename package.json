@@ -12,7 +12,6 @@
     "ep_etherpad-lite": "1.4.x"
   },
   "scripts": {
-    "preinstall": "npm link ./src",
-    "preupdate": "npm link ./src"
+    "pretest": "npm link ${OPENSHIFT_REPO_DIR:=`pwd -P`/}src"
   }
 }

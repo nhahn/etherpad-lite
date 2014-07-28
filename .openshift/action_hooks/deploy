@@ -21,3 +21,13 @@ sed -i 's/OPENSHIFT_MYSQL_DB_PORT/'$OPENSHIFT_MYSQL_DB_PORT'/' $settingsfile
 sed -i 's/OPENSHIFT_MYSQL_DB_PASSWORD/'$OPENSHIFT_MYSQL_DB_PASSWORD'/' $settingsfile
 sed -i 's/OPENSHIFT_APP_NAME/'$OPENSHIFT_APP_NAME'/' $settingsfile
 
+#make sure the etherpad deps are installed
+pushd $OPENSHIFT_REPO_DIR/node_modules
+if [[ -f ./ep_etherpad-lite ]]
+then
+  rm ep_etherpad-lite
+fi
+ln -s ../src/ ep_etherpad-lite
+cd ep_etherpad-lite
+npm install
+popd

@@ -9,7 +9,11 @@
   "author": "",
   "license": "BSD-2-Clause",
   "dependencies": {
-    "ep_etherpad-lite": "1.4.x"
+    "ep_etherpad-lite": "1.4.x",
+    "ep_authorship_export": "0.0.2",
+    "ep_disableChat": "0.0.2",
+    "ep_headings": "0.1.6",
+    "ep_spellcheck": "0.0.3"
   },
   "scripts": {
     "pretest": "npm link ${OPENSHIFT_REPO_DIR:=`pwd -P`/}src"

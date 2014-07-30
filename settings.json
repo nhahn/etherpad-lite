@@ -5,7 +5,7 @@
 */
 {
   // Name your instance!
-  "title": "Knowledge Accelerator",
+  "title": "Etherpad",
 
   // favicon default name
   // alternatively, set up a fully specified Url to your own favicon
@@ -32,23 +32,33 @@
           },
 
   */
-   
+
+  //The Type of the database. You can choose between dirty, postgres, sqlite and mysql
+  //You shouldn't use "dirty" for for anything else than testing or development
+  "dbType" : "dirty",
+  //the database specific settings
+  "dbSettings" : {
+                   "filename" : "var/dirty.db"
+                 },
+                 
+  /* An Example of MySQL Configuration
    "dbType" : "mysql",
-   "dbSettings" : { 
-                  "user"    : "root", 
-                  "password": "root", 
-                  "database": "etherpad",
-                  "port": "/Applications/MAMP/tmp/mysql/mysql.sock"
-                 },   
+   "dbSettings" : {
+                    "user"    : "root", 
+                    "host"    : "localhost", 
+                    "password": "", 
+                    "database": "store"
+                  },
+  */
   
   //the default text of a pad
-  "defaultPadText" : "\n\n\n\n------------------------------ Clips added above this line ------------------------------------------\n\n\n",
+  "defaultPadText" : "Welcome to Etherpad!\n\nThis pad text is synchronized as you type, so that everyone viewing this page sees the same text. This allows you to collaborate seamlessly on documents!\n\nGet involved with Etherpad at http:\/\/etherpad.org\n",
   
   /* Users must have a session to access pads. This effectively allows only group pads to be accessed. */
-  "requireSession" : true,
+  "requireSession" : false,
 
   /* Users may edit pads but not create new ones. Pad creation is only via the API. This applies both to group pads and regular pads. */
-  "editOnly" : true,
+  "editOnly" : false,
   
   /* if true, all css & js will be minified before sending to the client. This will improve the loading performance massivly, 
      but makes it impossible to debug the javascript/css */
@@ -77,12 +87,18 @@
   
   /* Users for basic authentication. is_admin = true gives access to /admin.
      If you do not uncomment this, /admin will not be available! */
+  /*
   "users": {
     "admin": {
       "password": "changeme1",
       "is_admin": true
+    },
+    "user": {
+      "password": "changeme1",
+      "is_admin": false
     }
   },
+  */
 
   // restrict socket.io transport methods
   "socketTransportProtocols" : ["xhr-polling", "jsonp-polling", "htmlfile"],
@@ -93,15 +109,18 @@
       ["bold", "italic", "underline", "strikethrough"],
       ["orderedlist", "unorderedlist", "indent", "outdent"],
       ["undo", "redo"],
-    ],  
+      ["clearauthorship"]
+    ],
     "right": [
-      ["timeslider", "savedrevision"],
+      ["importexport", "timeslider", "savedrevision"],
+      ["settings", "embed"],
       ["showusers"]
-    ]   
-  },  
-
-  //Spellcheck settings for the pad
-  ep_spellcheck_default: true,
+    ],
+    "timeslider": [
+      ["timeslider_export", "timeslider_returnToPad"]
+    ]
+  },
+  */
 
   /* The log level we are using, can be: DEBUG, INFO, WARN, ERROR */
   "loglevel": "INFO",
